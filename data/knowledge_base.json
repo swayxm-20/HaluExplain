@@ -1,0 +1,82 @@
+[
+  {
+    "text": "The Great Wall of China is not visible from space with the naked eye. Astronauts have confirmed that the wall is too narrow (approximately 9 meters wide) to be seen from low Earth orbit without optical aids.",
+    "source": "NASA/Space Facts"
+  },
+  {
+    "text": "The Moon is a natural satellite of Earth composed primarily of rock and regolith. It consists of oxygen, silicon, magnesium, iron, calcium, and aluminum. It is definitively not made of cheese or any organic material.",
+    "source": "NASA Lunar Science"
+  },
+  {
+    "text": "Albert Einstein did not fail mathematics as a child. He was actually proficient in mathematics and physics from an early age. The myth arose from a misunderstanding of a Swiss grading scale inversion.",
+    "source": "Einstein Archives / History of Science"
+  },
+  {
+    "text": "Humans use virtually all regions of their brain; PET and fMRI scans show activity throughout the entire brain over the course of a day. The claim that humans only use 10% of their brain is a persistent myth with no scientific basis.",
+    "source": "Neuroscience Research"
+  },
+  {
+    "text": "Lightning can and does strike the same place twice — and often more. The Empire State Building in New York is struck by lightning approximately 20 to 25 times per year.",
+    "source": "National Weather Service"
+  },
+  {
+    "text": "The speed of light in a vacuum is exactly 299,792,458 metres per second (approximately 3 × 10^8 m/s). Nothing with mass can travel at or beyond this speed according to Einstein's special theory of relativity.",
+    "source": "NIST / Physics Constants"
+  },
+  {
+    "text": "Water does not drain in opposite directions in the Northern and Southern Hemispheres due to the Coriolis effect. The Coriolis force is far too weak to influence small volumes of water in sinks or toilets; drain direction is dictated by bowl geometry.",
+    "source": "Physics Today"
+  },
+  {
+    "text": "Mount Everest is the highest mountain above sea level at 8,848.86 metres (29,031.7 ft) as remeasured in 2020 by a joint Chinese-Nepalese survey.",
+    "source": "National Geographic / 2020 Survey"
+  },
+  {
+    "text": "DNA (deoxyribonucleic acid) was first isolated by Friedrich Miescher in 1869. Its double-helix structure was described by James Watson and Francis Crick in 1953 based substantially on X-ray crystallography data by Rosalind Franklin.",
+    "source": "History of Molecular Biology"
+  },
+  {
+    "text": "The Earth is approximately 4.54 billion years old, determined by radiometric dating of meteorites and Earth rocks. It is not flat — it is an oblate spheroid, slightly flattened at the poles and bulging at the equator.",
+    "source": "Geological Survey / USGS"
+  },
+  {
+    "text": "Vaccines do not cause autism. The original 1998 Wakefield study claiming a link was retracted by The Lancet in 2010 after it was found to be fraudulent. Large-scale epidemiological studies involving millions of children have found no causal link.",
+    "source": "CDC / WHO / The Lancet Retraction"
+  },
+  {
+    "text": "The average human body temperature is not strictly 37 °C (98.6 °F). A 2020 Stanford study found that the average has been declining and is now approximately 36.6 °C (97.9 °F), with normal range being 36.1–37.2 °C.",
+    "source": "Stanford University / eLife Journal 2020"
+  },
+  {
+    "text": "Bats are not blind. All bat species have eyes and can see. Many species are nocturnal and use echolocation as a primary navigation tool, but echolocation complements rather than replaces vision.",
+    "source": "Bat Conservation International"
+  },
+  {
+    "text": "Napoleon Bonaparte was not unusually short. Historical accounts and forensic analysis suggest he was approximately 5 feet 6–7 inches (168–170 cm) tall, which was average height for a Frenchman of his era. The 'short Napoleon' myth arose partly from confusion between French and English measurement units.",
+    "source": "Historical Records / Smithsonian"
+  },
+  {
+    "text": "Goldfish do not have a memory of only three seconds. Scientific studies have shown that goldfish can remember things for months and can be trained by classical and operant conditioning techniques.",
+    "source": "Animal Cognition Research"
+  },
+  {
+    "text": "Antibiotics are effective only against bacterial infections, not viral infections such as the common cold or influenza. Overuse of antibiotics contributes to antimicrobial resistance, a major global health threat recognised by the WHO.",
+    "source": "WHO / CDC Antimicrobial Resistance"
+  },
+  {
+    "text": "Swallowed chewing gum does not stay in the stomach for seven years. While gum base is indigestible, it moves through the digestive system in a similar time frame to other indigestible food matter (days to a week), not years.",
+    "source": "Gastroenterology Research"
+  },
+  {
+    "text": "Julius Caesar was not born via Caesarean section. The etymology of 'Caesarean section' predates Julius Caesar and is likely derived from the Latin 'caedere' (to cut). Caesarean births at the time invariably killed the mother; Caesar's mother Aurelia was known to be alive well into his adulthood.",
+    "source": "Classical Historians / Medical History"
+  },
+  {
+    "text": "The tongue does not have distinct taste zones (sweet at the tip, bitter at the back, etc.). This 'tongue map' is a misrepresentation of a 19th-century German study. All taste qualities can be detected across the entire tongue.",
+    "source": "Neuroscience of Taste / NIH"
+  },
+  {
+    "text": "Sugar does not cause hyperactivity in children. Multiple double-blind clinical trials have consistently found no link between sugar consumption and increased activity levels. The perceived effect is attributed to expectation bias in parents.",
+    "source": "JAMA / Pediatric Clinical Trials"
+  }
+]

@@ -1,0 +1,39 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# HaluExplain — Hallucination Detection & Verification Engine
+# requirements.txt
+# ─────────────────────────────────────────────────────────────────────────────
+# Install with:
+#   pip install -r requirements.txt
+#
+# Python: 3.10 or 3.11 recommended.
+# GPU (optional but recommended for entailment + explanation modules):
+#   pip install torch --index-url https://download.pytorch.org/whl/cu118
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Web framework ──────────────────────────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9       # required by FastAPI for form data
+
+# ── Pydantic (FastAPI dependency) ──────────────────────────────────────────────
+pydantic==2.7.1
+
+# ── ML / NLP core ─────────────────────────────────────────────────────────────
+torch==2.3.0                  # CPU build; replace with cu118 wheel for GPU
+transformers==4.41.0
+sentence-transformers==2.7.0
+accelerate==0.30.0            # required by some transformers pipelines
+
+# ── Retrieval ─────────────────────────────────────────────────────────────────
+rank-bm25==0.2.2
+
+# ── Clustering / linear algebra ───────────────────────────────────────────────
+scikit-learn==1.4.2
+numpy==1.26.4
+
+# ── Sentence tokenisation ─────────────────────────────────────────────────────
+nltk==3.8.1
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+httpx==0.27.0                 # for testing the API programmatically
+tqdm==4.66.4                  # progress bars used by sentence-transformers

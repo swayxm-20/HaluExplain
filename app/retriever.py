@@ -25,6 +25,7 @@ List[EvidencePassage] sorted by descending RRF score.
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import os
@@ -42,8 +43,11 @@ from config import (
     RRF_K,
     SPARSE_WEIGHT,
     TOP_K_PASSAGES,
+    TAVILY_API_KEY,
+    ENABLE_EXTERNAL_SEARCH,
 )
 from app.models import EvidencePassage
+from app.search import ExternalSearcher
 
 logger = logging.getLogger(__name__)
 
@@ -132,11 +136,24 @@ class HybridRetriever:
         knowledge_base_path: str = KNOWLEDGE_BASE_PATH,
         top_k: int = TOP_K_PASSAGES,
         rrf_k: int = RRF_K,
+        enable_external_search: bool = ENABLE_EXTERNAL_SEARCH,
+        tavily_api_key: Optional[str] = TAVILY_API_KEY,
     ) -> None:
         logger.info("Initialising HybridRetriever…")
         self._embedder = SentenceTransformer(model_name)
         self._top_k = top_k
         self._rrf_k = rrf_k
+        self._enable_external_search = enable_external_search
+        
+        # Initialize external searcher
+        if self._enable_external_search:
+            self._external_searcher = ExternalSearcher(
+                tavily_api_key=tavily_api_key,
+                max_web_results=3,
+                max_wiki_results=2,
+            )
+        else:
+            self._external_searcher = None
 
         # Load and index the static knowledge base
         raw_docs = _load_knowledge_base(knowledge_base_path)
@@ -156,27 +173,18 @@ class HybridRetriever:
         logger.info("HybridRetriever ready.")
 
     # ------------------------------------------------------------------
-    def retrieve(
+    async def _retrieve_async(
         self,
         query: str,
         extra_docs: Optional[List[str]] = None,
         top_k: Optional[int] = None,
+        use_external_search: Optional[bool] = None,
     ) -> List[EvidencePassage]:
         """
-        Retrieve Top-K evidence passages for *query*.
-
-        Parameters
-        ----------
-        query      : The claim / question to retrieve evidence for.
-        extra_docs : Additional passages to merge into the search corpus
-                     for this request only (request-scoped documents).
-        top_k      : Override default Top-K.
-
-        Returns
-        -------
-        List[EvidencePassage] sorted by descending RRF score.
+        Async implementation for external search integration.
         """
         k = top_k if top_k is not None else self._top_k
+        should_use_external = use_external_search if use_external_search is not None else self._enable_external_search
 
         # ── Merge static KB with request-scoped docs ───────────────────
         texts: List[str] = list(self._base_texts)
@@ -186,17 +194,29 @@ class HybridRetriever:
             texts.extend(extra_docs)
             sources.extend([None] * len(extra_docs))
 
+        # ── Add external search results if enabled ─────────────────────
+        if should_use_external and self._external_searcher:
+            try:
+                external_results = await self._external_searcher.search_all(query)
+                for result in external_results:
+                    texts.append(result["text"])
+                    sources.append(result["source"])
+                logger.info("Added %d external search results to corpus", len(external_results))
+            except Exception as e:
+                logger.error("External search failed: %s", e)
+
         if not texts:
             logger.warning("No passages available for retrieval.")
             return []
 
         # ── Dense embeddings for the full corpus ───────────────────────
-        if extra_docs:
-            extra_embs: np.ndarray = normalize(
-                self._embedder.encode(extra_docs, batch_size=32, show_progress_bar=False, convert_to_numpy=True),
+        if extra_docs or (should_use_external and self._external_searcher):
+            # Re-embed everything if we have new content
+            all_embs: np.ndarray = normalize(
+                self._embedder.encode(texts, batch_size=32, show_progress_bar=False, convert_to_numpy=True),
                 norm="l2",
             )
-            corpus_embeddings: np.ndarray = np.vstack([self._base_embeddings, extra_embs])
+            corpus_embeddings = all_embs
         else:
             corpus_embeddings = self._base_embeddings
 
@@ -233,3 +253,37 @@ class HybridRetriever:
 
         logger.info("Retrieval complete: returned %d/%d passages.", len(results), k)
         return results
+    
+    # ------------------------------------------------------------------
+    def retrieve(
+        self,
+        query: str,
+        extra_docs: Optional[List[str]] = None,
+        top_k: Optional[int] = None,
+        use_external_search: Optional[bool] = None,
+    ) -> List[EvidencePassage]:
+        """
+        Retrieve Top-K evidence passages for *query*.
+
+        Parameters
+        ----------
+        query              : The claim / question to retrieve evidence for.
+        extra_docs         : Additional passages to merge into the search corpus
+                             for this request only (request-scoped documents).
+        top_k              : Override default Top-K.
+        use_external_search: Override default external search setting.
+
+        Returns
+        -------
+        List[EvidencePassage] sorted by descending RRF score.
+        """
+        # Run the async version in the current event loop
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+        
+        return loop.run_until_complete(
+            self._retrieve_async(query, extra_docs, top_k, use_external_search)
+        )

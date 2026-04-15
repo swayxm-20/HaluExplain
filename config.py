@@ -55,6 +55,10 @@ SPARSE_WEIGHT: float = 0.4
 # Path to the knowledge-base JSON file
 KNOWLEDGE_BASE_PATH: str = "data/knowledge_base.json"
 
+# External search configuration
+ENABLE_EXTERNAL_SEARCH: bool = True
+TAVILY_API_KEY: str = None  # Set this in environment or override in code
+
 
 # ──────────────────────────────────────────────
 # Entailment module

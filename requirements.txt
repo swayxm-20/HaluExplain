@@ -34,6 +34,10 @@ numpy==1.26.4
 # ── Sentence tokenisation ─────────────────────────────────────────────────────
 nltk==3.8.1
 
+# ── External search ─────────────────────────────────────────────────────────
+aiohttp==3.9.5                # async HTTP client for Tavily API
+wikipedia-api==0.6.0          # Wikipedia API client
+
 # ── Utilities ─────────────────────────────────────────────────────────────────
 httpx==0.27.0                 # for testing the API programmatically
 tqdm==4.66.4                  # progress bars used by sentence-transformers
